@@ -1,0 +1,6 @@
+X Need a header for title
+
+X ProductList (list of prods)
+  X Product (product comp)
+
+- Styling (bootstrap??)
