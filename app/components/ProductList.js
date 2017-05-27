@@ -3,7 +3,7 @@ import { products, generateVoteCount } from '../seed';
 
 function Product(props) {
   return (
-      <div className='item'>
+      <div className='ui unstackable items'>
         <div className='image'>
           <img src={props.productImageUrl} />
         </div>
