@@ -4,3 +4,14 @@ X ProductList (list of prods)
   X Product (product comp)
 
 - Styling (bootstrap??)
+
+Parent Component
+
+Child Component (as many as you want)
+ - firstName
+ - lastName
+ - gender
+ - age (dynamic)
+ - numberOfToys (dynamic)
+ - coolKid? (boolean) Is this your cool Kid?
+
