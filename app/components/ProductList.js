@@ -48,15 +48,36 @@ class ProductList extends React.Component {
   constructor (props) {
     super(props);
 
+    this.state = {
+      products: []
+    }
+
     this.handleProductUpVote = this.handleProductUpVote.bind(this);
   }
 
+  componentDidMount() {
+    // Ajax, data stuff
+    this.setState({ products: products });
+  }
+
   handleProductUpVote(productId) {
-    console.log(`${productId} was upvoted.`);
+    const nextProducts = this.state.products.map((product) => {
+      if (product.id === productId) {
+        return Object.assign({}, product, {
+          votes: product.votes + 1
+        });
+      } else {
+        return product;
+      }
+    });
+
+    this.setState({
+      products: nextProducts
+    });
   }
 
   render() {
-    const sortedProducts = products.sort((a, b) => (
+    const sortedProducts = this.state.products.sort((a, b) => (
       b.votes - a.votes
     ));
     const productComponents = sortedProducts.map((product) => (
