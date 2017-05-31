@@ -1,40 +1,65 @@
 import React from 'react';
 import { products, generateVoteCount } from '../seed';
 
-function Product(props) {
-  return (
-      <div className='items'>
-        <div className='image'>
-          <img src={props.url} />
+class Product extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleUpVote = this.handleUpVote.bind(this);
+  }
+
+  handleUpVote() {
+    this.props.onVote(this.props.id);
+  }
+
+  render() {
+    return (
+        <div className='items'>
+          <div className='image'>
+            <img src={this.props.productImageUrl} />
+          </div>
+          <div className='content'>
+            <div className='header'>
+              <a onClick={this.handleUpVote}>
+                <img src={this.props.productImageUrl} />
+              </a>
+              {this.props.votes}
+            </div>
+            <div className='description'>
+              <a href={this.props.url}>
+                {this.props.title}
+              </a>
+              <p>{this.props.description}</p>
+            </div>
+            <div className='extra'>
+              <span>Submitted by:</span>
+              <img
+                className='avatar image'
+                src={this.props.submitterAvatarUrl}
+              />
+            </div>
+          </div>
         </div>
-        <div className='content'>
-          <div className='header'>
-            <a>
-              <i className='caret' />
-            </a>
-            {props.votes}
-          </div>
-          <div className='description'>
-            <a href={props.url}>
-              {props.title}
-            </a>
-            <p>{props.description}</p>
-          </div>
-          <div className='extra'>
-            <span>Submitted by:</span>
-            <img
-              className='avatar image'
-              src={props.submitterAvatarUrl}
-            />
-          </div>
-        </div>
-      </div>
-  );
+      );
+  }
 }
 
 class ProductList extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.handleProductUpVote = this.handleProductUpVote.bind(this);
+  }
+
+  handleProductUpVote(productId) {
+    console.log(`${productId} was upvoted.`);
+  }
+
   render() {
-    const productComponents = products.map((product) => (
+    const sortedProducts = products.sort((a, b) => (
+      b.votes - a.votes
+    ));
+    const productComponents = sortedProducts.map((product) => (
         <Product
           key={'product-' + product.id}
           id={product.id}
@@ -44,6 +69,7 @@ class ProductList extends React.Component {
           votes={product.votes}
           submitterAvatarUrl={product.submitterAvatarUrl}
           productImageUrl={product.productImageUrl}
+          onVote={this.handleProductUpVote}
         />
     ));
     return (
